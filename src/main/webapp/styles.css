@@ -13,4 +13,5 @@ body{
     width: 500px;
     align-self: center;
     margin: 20px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1); /*Le ponemos sombra al contenedor, mas estetico*/
 }
