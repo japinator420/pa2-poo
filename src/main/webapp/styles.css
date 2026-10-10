@@ -1,0 +1,16 @@
+body{
+    text-align: center;
+    font-family: consolas;
+    background: beige;
+    display: flex;
+    flex-direction: column;
+}
+
+#formulario-colaboradores{
+    background: #f5e3c6;
+    padding: 10px;
+    border: 1px solid black;
+    width: 500px;
+    align-self: center;
+    margin: 20px;
+}
