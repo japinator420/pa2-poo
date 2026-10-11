@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="org.japinator.Cotizacion" %>
 <!DOCTYPE html>
 <html lang="es">
     <head>
@@ -51,7 +52,7 @@
                     <input type="checkbox" id="p5" name="productos" value="Teclado Mecanico">
                     <label for="p5">Teclado Mecánico ($80)</label><br>
 
-                    <input type="checkbox" id="p6" name="productos" value="Auriculares">
+                    <input type="checkbox" id="p6" name="productos" value="Auriculares Gamer">
                     <label for="p6">Auriculares Gamer ($60)</label>
                 </div>
                 <br>
@@ -74,14 +75,20 @@
                 <button type="submit">Generar Cotización</button>
             </form>
 
+            <!-- Calculamos el costo de los productos seleccionados -->
+            <%
+            Cotizacion nuevaCotizacion = new Cotizacion();
 
+            String[] codigosProductos = request.getParameterValues("productos");
+            double precioTotal = nuevaCotizacion.sumarProductos(codigosProductos);
+            %>
 
             <!-- COTIZACION FINAL -->
             <div>
                 <p>Cliente: <%= request.getParameter("nombre") %> </p>
                 <p>Producto: <%= (request.getParameterValues("productos") != null) ? String.join(", ", request.getParameterValues("productos")) : "" %> </p>
                 <p>Precio: S/ <%= request.getAttribute("precio") %></p>
-                <p>Cantidad: <%= request.getAttribute("cantidad") %> </p>
+                <p>Subtotal: <%= precioTotal %> </p>
                 <p>Descuento: <%= request.getAttribute("descuento") %> % </p>
                 <p> Monto descontado: S/ <%= request.getAttribute("montoDescontado") %> </p>
 
