@@ -74,7 +74,25 @@
                 <button type="submit">Generar Cotización</button>
             </form>
 
+            <!-- Cálculo de descuento según cargo -->
+            <%
+                String cargo = request.getParameter("cargo");
+                double descuento = 0;
 
+                if (cargo != null) {
+                    switch (cargo) {
+                        case "vendedor":
+                            descuento = 0.15;
+                            break;
+                        case "administrador":
+                            descuento = 0.20;
+                            break;
+                        case "gerente":
+                            descuento = 0.25;
+                            break;
+                    }
+                }
+            %>
 
             <!-- COTIZACION FINAL -->
             <div>
@@ -82,7 +100,7 @@
                 <p>Producto: <%= (request.getParameterValues("productos") != null) ? String.join(", ", request.getParameterValues("productos")) : "" %> </p>
                 <p>Precio: S/ <%= request.getAttribute("precio") %></p>
                 <p>Cantidad: <%= request.getAttribute("cantidad") %> </p>
-                <p>Descuento: <%= request.getAttribute("descuento") %> % </p>
+                <p>Descuento: <%= descuento * 100 %> % </p>
                 <p> Monto descontado: S/ <%= request.getAttribute("montoDescontado") %> </p>
 
                 <h3>Total a Pagar: S/ <%= request.getAttribute("totalPagar") %></h3>
