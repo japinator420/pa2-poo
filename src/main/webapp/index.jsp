@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="org.japinator.Cotizacion" %>
 <!DOCTYPE html>
 <html lang="es">
     <head>
@@ -51,7 +52,7 @@
                     <input type="checkbox" id="p5" name="productos" value="Teclado Mecanico">
                     <label for="p5">Teclado Mecánico ($80)</label><br>
 
-                    <input type="checkbox" id="p6" name="productos" value="Auriculares">
+                    <input type="checkbox" id="p6" name="productos" value="Auriculares Gamer">
                     <label for="p6">Auriculares Gamer ($60)</label>
                 </div>
                 <br>
@@ -74,40 +75,44 @@
                 <button type="submit">Generar Cotización</button>
             </form>
 
-            <!-- Cálculo de descuento según cargo -->
+            <!-- Calculamos el costo de los productos seleccionados -->
             <%
-                String cargo = request.getParameter("cargo");
-                double descuento = 0;
+                boolean enviado = request.getMethod().equals("POST");
 
-                if (cargo != null) {
-                    switch (cargo) {
-                        case "vendedor":
-                            descuento = 0.15;
-                            break;
-                        case "administrador":
-                            descuento = 0.20;
-                            break;
-                        case "gerente":
-                            descuento = 0.25;
-                            break;
-                    }
+                String nombre = request.getParameter("nombre");
+                String cargo = request.getParameter("cargo");
+                String[] codigosProductos = request.getParameterValues("productos");
+
+                double precioTotal = 0;
+                double descuento = 0;
+                double montoDescontado = 0;
+                double montoFinal = 0;
+                Cotizacion nuevaCotizacion = null;
+
+                if (enviado) {
+                    nuevaCotizacion = new Cotizacion();
+                    precioTotal = nuevaCotizacion.sumarProductos(codigosProductos);
+                    descuento = nuevaCotizacion.obtenerDescuentoPorCargo(cargo);
+                    montoDescontado = precioTotal * descuento;
+                    montoFinal = precioTotal - montoDescontado;
                 }
             %>
 
-            <!-- COTIZACION FINAL -->
-            <div>
-                <p>Cliente: <%= request.getParameter("nombre") %> </p>
-                <p>Producto: <%= (request.getParameterValues("productos") != null) ? String.join(", ", request.getParameterValues("productos")) : "" %> </p>
-                <p>Precio: S/ <%= request.getAttribute("precio") %></p>
-                <p>Cantidad: <%= request.getAttribute("cantidad") %> </p>
-                <p>Descuento: <%= descuento * 100 %> % </p>
-                <p> Monto descontado: S/ <%= request.getAttribute("montoDescontado") %> </p>
+            <% if (enviado) { %>
+                <!-- COTIZACION FINAL -->
+                <div>
+                    <p>Cliente: <%= nombre %> </p>
+                    <p>Producto: <%= (request.getParameterValues("productos") != null) ? String.join(", ", request.getParameterValues("productos")) : "" %> </p>
+                    <p>Subtotal: $ <%= precioTotal %> </p>
+                    <p>Descuento: <%= Math.round(descuento * 100) %> % </p>
+                    <p>Monto descontado: $ <%= montoDescontado %> </p>
 
-                <h3>Total a Pagar: S/ <%= request.getAttribute("totalPagar") %></h3>
+                    <h3>Total a Pagar: $ <%= montoFinal %></h3>
 
-                <p>El nombre del producto tiene <%= request.getAttribute("caracteresProducto") %> caracteres.</p>
-                <br>
-                <a href="">Nueva cotización</a>
-            </div>
+                    <p>El nombre del producto tiene <%= request.getAttribute("caracteresProducto") %> caracteres.</p>
+                    <br>
+                    <a href="">Nueva cotización</a>
+                </div>
+            <% } %>
     </body>
 </html>
