@@ -77,26 +77,42 @@
 
             <!-- Calculamos el costo de los productos seleccionados -->
             <%
-            Cotizacion nuevaCotizacion = new Cotizacion();
+                boolean enviado = request.getMethod().equals("POST");
 
-            String[] codigosProductos = request.getParameterValues("productos");
-            double precioTotal = nuevaCotizacion.sumarProductos(codigosProductos);
+                String nombre = request.getParameter("nombre");
+                String cargo = request.getParameter("cargo");
+                String[] codigosProductos = request.getParameterValues("productos");
+
+                double precioTotal = 0;
+                double descuento = 0;
+                double montoDescontado = 0;
+                double montoFinal = 0;
+                Cotizacion nuevaCotizacion = null;
+
+                if (enviado) {
+                    nuevaCotizacion = new Cotizacion();
+                    precioTotal = nuevaCotizacion.sumarProductos(codigosProductos);
+                    descuento = nuevaCotizacion.obtenerDescuentoPorCargo(cargo);
+                    montoDescontado = precioTotal * descuento;
+                    montoFinal = precioTotal - montoDescontado;
+                }
             %>
 
-            <!-- COTIZACION FINAL -->
-            <div>
-                <p>Cliente: <%= request.getParameter("nombre") %> </p>
-                <p>Producto: <%= (request.getParameterValues("productos") != null) ? String.join(", ", request.getParameterValues("productos")) : "" %> </p>
-                <p>Precio: S/ <%= request.getAttribute("precio") %></p>
-                <p>Subtotal: <%= precioTotal %> </p>
-                <p>Descuento: <%= request.getAttribute("descuento") %> % </p>
-                <p> Monto descontado: S/ <%= request.getAttribute("montoDescontado") %> </p>
+            <% if (enviado) { %>
+                <!-- COTIZACION FINAL -->
+                <div>
+                    <p>Cliente: <%= nombre %> </p>
+                    <p>Producto: <%= (request.getParameterValues("productos") != null) ? String.join(", ", request.getParameterValues("productos")) : "" %> </p>
+                    <p>Subtotal: $ <%= precioTotal %> </p>
+                    <p>Descuento: <%= Math.round(descuento * 100) %> % </p>
+                    <p>Monto descontado: $ <%= montoDescontado %> </p>
 
-                <h3>Total a Pagar: S/ <%= request.getAttribute("totalPagar") %></h3>
+                    <h3>Total a Pagar: $ <%= montoFinal %></h3>
 
-                <p>El nombre del producto tiene <%= request.getAttribute("caracteresProducto") %> caracteres.</p>
-                <br>
-                <a href="">Nueva cotización</a>
-            </div>
+                    <p>El nombre del producto tiene <%= request.getAttribute("caracteresProducto") %> caracteres.</p>
+                    <br>
+                    <a href="">Nueva cotización</a>
+                </div>
+            <% } %>
     </body>
 </html>

@@ -26,4 +26,20 @@ public class Cotizacion {
             default: return 0.0;
         }
     }
+
+    public double obtenerDescuentoPorCargo(String cargo) {
+        switch (cargo) {
+            // Vendedor 15% de descuento
+            case "vendedor":
+                return 0.15;
+            // Administrador 20% de descuento
+            case "administrador":
+                return 0.20;
+            // Gerente 25% de descuento
+            case "gerente":
+                return 0.25;
+            default:
+                return 0;
+        }
+    }
 }
