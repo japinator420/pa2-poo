@@ -74,5 +74,21 @@
                 <button type="submit">Generar Cotización</button>
             </form>
 
+            <!-- COTIZACION FINAL -->
+
+            <p>Cliente: <%= request.getParameter("nombre") %> </p>
+            <p>Producto: <%= (request.getParameterValues("productos") != null) ? String.join(", ", request.getParameterValues("productos")) : "" %> </p>
+            <p>Precio: S/ <%= request.getAttribute("precio") %></p>
+            <p>Cantidad: <%= request.getAttribute("cantidad") %> </p>
+            <p>Cantidad: <%= request.getAttribute("cantidad") %> </p>
+            <p>Descuento: <%= request.getAttribute("descuento") %> % </p>
+            <p> Monto descontado: S/ <%= request.getAttribute("montoDescontado") %> </p>
+
+            <h3>Total a Pagar: S/ <%= request.getAttribute("totalPagar") %></h3>
+
+            <p>El nombre del producto tiene <%= request.getAttribute("caracteresProducto") %> caracteres.</p>
+            <br>
+            <a href="">Nueva cotización</a>
+
     </body>
 </html>
