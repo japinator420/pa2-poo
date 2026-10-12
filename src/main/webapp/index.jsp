@@ -89,7 +89,6 @@
                 double montoDescontado = 0;
                 double montoFinal = 0;
 
-                int cantidadCaracteres = 0;
                 boolean correoValido = false;
                 String codigoTicket = "";
 
@@ -102,9 +101,9 @@
                     montoDescontado = precioTotal * descuento;
                     montoFinal = precioTotal - montoDescontado;
 
-                    cantidadCaracteres = nombre.trim().length();
 
-                  <!--  Ejecutamos las validaciones y generación de código -->
+
+                  // Ejecutamos las validaciones y generación de código
                     correoValido = nuevaCotizacion.validarCorreo(correo);
                     codigoTicket = nuevaCotizacion.generarCodigoCotizacion();
                 }
