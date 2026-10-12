@@ -103,6 +103,8 @@
                     montoFinal = precioTotal - montoDescontado;
 
                     cantidadCaracteres = nombre.trim().length();
+
+                  <!--  Ejecutamos las validaciones y generación de código -->
                     correoValido = nuevaCotizacion.validarCorreo(correo);
                     codigoTicket = nuevaCotizacion.generarCodigoCotizacion();
                 }
@@ -121,6 +123,7 @@
                     <h3>Total a Pagar: $ <%= montoFinal %></h3>
 
                     <p>El nombre del producto tiene <%= request.getAttribute("caracteresProducto") %> caracteres.</p>
+                    <!-- Uso del operador ternario para imprimir -->
                     <p>Estado del correo: <%= correoValido ? "Sí, es válido" : "No es válido" %> </p>
                     <br>
                     <a href="">Nueva cotización</a>
