@@ -53,5 +53,13 @@ public class Cotizacion {
         return correo.contains("@");
     }
 
+    public String generarCodigoCotizacion(){
+        int aleatorio =(int)(Math.random()*900)+100;
+
+        int correlativo =contadorUnico++;
+
+        return "TK-"+correlativo+"-"+aleatorio;
+    }
+
 
 }
