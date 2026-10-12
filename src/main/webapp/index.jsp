@@ -80,6 +80,7 @@
                 boolean enviado = request.getMethod().equals("POST");
 
                 String nombre = request.getParameter("nombre");
+                String correo =request.getParameter("correo");
                 String cargo = request.getParameter("cargo");
                 String[] codigosProductos = request.getParameterValues("productos");
 
@@ -87,6 +88,10 @@
                 double descuento = 0;
                 double montoDescontado = 0;
                 double montoFinal = 0;
+
+                boolean correoValido = false;
+                String codigoTicket = "";
+
                 Cotizacion nuevaCotizacion = null;
 
                 if (enviado) {
@@ -95,12 +100,19 @@
                     descuento = nuevaCotizacion.obtenerDescuentoPorCargo(cargo);
                     montoDescontado = precioTotal * descuento;
                     montoFinal = precioTotal - montoDescontado;
+
+
+
+                  // Ejecutamos las validaciones y generación de código
+                    correoValido = nuevaCotizacion.validarCorreo(correo);
+                    codigoTicket = nuevaCotizacion.generarCodigoCotizacion();
                 }
             %>
 
             <% if (enviado) { %>
                 <!-- COTIZACION FINAL -->
                 <div>
+                    <p>Ticket: <%= codigoTicket %> </p>
                     <p>Cliente: <%= nombre %> </p>
                     <p>Producto: <%= (request.getParameterValues("productos") != null) ? String.join(", ", request.getParameterValues("productos")) : "" %> </p>
                     <p>Subtotal: $ <%= precioTotal %> </p>
@@ -110,6 +122,8 @@
                     <h3>Total a Pagar: $ <%= montoFinal %></h3>
 
                     <p>El nombre del producto tiene <%= request.getAttribute("caracteresProducto") %> caracteres.</p>
+                    <!-- Uso del operador ternario para imprimir -->
+                    <p>Estado del correo: <%= correoValido ? "Sí, es válido" : "No es válido" %> </p>
                     <br>
                     <a href="">Nueva cotización</a>
                 </div>

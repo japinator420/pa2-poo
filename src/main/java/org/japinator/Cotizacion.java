@@ -1,6 +1,8 @@
 package org.japinator;
 
 public class Cotizacion {
+    //Variable estatica, no se reinica con cada cotizacion
+    private static int contadorUnico = 1;
 
     public double sumarProductos(String[] codigosSeleccionados) {
         double total = 0.0;
@@ -42,4 +44,25 @@ public class Cotizacion {
                 return 0;
         }
     }
+
+    //Clase String para validar
+    public boolean validarCorreo(String correo){
+        //eliminando espacios en blanco y verificando que no entren textos vacios
+        if(correo == null || correo.trim().isEmpty()){
+            return false;
+        }
+        return correo.contains("@");
+    }
+    //Uso de la clase Math
+    public String generarCodigoCotizacion(){
+        // Math.random() genera un número decimal. Lo multiplicamos por 900 y sumamos 100
+        // para asegurar siempre un número aleatorio de 3 dígitos (entre 100 y 999)
+        int aleatorio =(int)(Math.random()*900)+100;
+        // Capturamos el número único y lo incrementamos en 1 para la siguiente vez.
+        int correlativo =contadorUnico++;
+        // Retornamos el código combinando el correlativo de control y el aleatorio.
+        return "TK-"+correlativo+"-"+aleatorio;
+    }
+
+
 }
