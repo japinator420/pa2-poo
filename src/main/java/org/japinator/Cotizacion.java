@@ -2,6 +2,8 @@ package org.japinator;
 
 public class Cotizacion {
 
+    private static int contadorUnico = 1;
+
     public double sumarProductos(String[] codigosSeleccionados) {
         double total = 0.0;
 
@@ -42,4 +44,14 @@ public class Cotizacion {
                 return 0;
         }
     }
+
+    //Clase String para validar
+    public boolean validarCorreo(String correo){
+        if(correo == null || correo.trim().isEmpty()){
+            return false;
+        }
+        return correo.contains("@");
+    }
+
+
 }
