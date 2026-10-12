@@ -121,7 +121,7 @@
                     <h3>Total a Pagar: $ <%= montoFinal %></h3>
 
                     <p>El nombre del producto tiene <%= request.getAttribute("caracteresProducto") %> caracteres.</p>
-                    <p>¿El correo ingresado es válido?: <%= correoValido %> </p>
+                    <p>Estado del correo: <%= correoValido ? "Sí, es válido" : "No es válido" %> </p>
                     <br>
                     <a href="">Nueva cotización</a>
                 </div>
