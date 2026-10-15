@@ -112,21 +112,21 @@ El sistema verifica que:
 7. Abrir index.jsp desde el navegador.
 8. Ingresar los datos y calcular la cotización.
 
-## 9. Integrantes del equipo
+## 9. Integrantes del equipo - Porcentajes de participación
 
-1. Amir Alvarez.
-2. Ariana Tiparra.
-3. Fátima Gallardo
-4. Diana Cueva Cerna
-5. Andreu Rangel
+1. Amir Alvarez (100%)
+2. Ariana Tiparra (100%)
+3. Fátima Gallardo (100%)
+4. Diana Cueva Cerna (100%)
+5. Andreu Rangel (100%)
 
 ## 10. Distribución de responsabilidades
 
--  Estructura de proyecto, formato html, css y método de suma de precios.
--  Resultado de la cotización.
--  Validación de envío de formulario para mostrar el resultado, método de descuento por cargo y cálculo de descuento.
--  Validación de correos y generacion de codigo de cotización
--  aplicacion de estilos CSS y  archivo README.
+-  Amir: Estructura de proyecto, formato html, css y método de suma de precios
+-  Ariana: Resultado de la cotización
+-  Fátima: Validación de envío de formulario para mostrar el resultado, método de descuento por cargo y cálculo de descuento
+-  Diana: Validación de correos y generación de código de cotización
+-  Andreu: Aplicacion de estilos CSS y archivo README
 
 ## 11. Pruebas realizadas
 
