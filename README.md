@@ -114,11 +114,11 @@ El sistema verifica que:
 
 ## 9. Integrantes del equipo - Porcentajes de participación
 
-1. Amir Alvarez (100%)
-2. Ariana Tiparra (100%)
-3. Fátima Gallardo (100%)
-4. Diana Cueva Cerna (100%)
-5. Andreu Rangel (100%)
+1. Ariana Tiparra Reyes (ArianaTiparra) (100%)
+2. Amir Alvarez Alvarez (japinator420) (100%)
+3. Andreu Antonio Rangel (andreurangel1991-art) (100%)
+4. Diana Cueva Cerna (diapia) (100%)
+5. Fátima Gallardo Ramírez (FatimaGR) (100%)
 
 ## 10. Distribución de responsabilidades
 
@@ -153,6 +153,7 @@ Agregar capturas de pantalla de:
 
 Enlace de YouTube:
 
+https://youtu.be/JZ94lEOdeHw
 
 En el video se explicará:
 
