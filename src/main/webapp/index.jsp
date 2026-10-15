@@ -1,5 +1,40 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="org.japinator.Cotizacion" %>
+
+<%
+    // 1. PRIMERO: Declaramos toda la lógica y variables al inicio
+    String nombre = request.getParameter("nombre");
+    String correo = request.getParameter("correo");
+    String cargo = request.getParameter("cargo");
+    String[] codigosProductos = request.getParameterValues("productos");
+
+    boolean enviado = (nombre != null && !nombre.trim().isEmpty());
+
+    // Estilos dinámicos para alternar el formulario y el resultado
+    String estiloFormulario = enviado ? "display: none;" : "display: block;";
+    String estiloResultado = enviado ? "display: block;" : "display: none;";
+
+    double precioTotal = 0;
+    double descuento = 0;
+    double montoDescontado = 0;
+    double montoFinal = 0;
+    boolean correoValido = false;
+    String codigoTicket = "";
+
+    Cotizacion nuevaCotizacion = null;
+
+    if (enviado) {
+        nuevaCotizacion = new Cotizacion();
+        precioTotal = nuevaCotizacion.sumarProductos(codigosProductos);
+        descuento = nuevaCotizacion.obtenerDescuentoPorCargo(cargo);
+        montoDescontado = precioTotal * descuento;
+        montoFinal = precioTotal - montoDescontado;
+
+        correoValido = nuevaCotizacion.validarCorreo(correo);
+        codigoTicket = nuevaCotizacion.generarCodigoCotizacion();
+    }
+%>
+
 <!DOCTYPE html>
 <html lang="es">
     <head>
@@ -8,7 +43,7 @@
     </head>
     <body>
         <h1>Cotizaciones Colaboradores TechStore</h1>
-        <form id="formulario-colaboradores" method="POST" action="">
+        <form id="formulario-colaboradores" method="POST" action="" style="<%= estiloFormulario %>">
                 <!-- Nombre del colaborador -->
                 <div>
                     <label for="nombre">Nombre del colaborador:</label><br>
@@ -75,43 +110,9 @@
                 <button type="submit">Generar Cotización</button>
             </form>
 
-            <!-- Calculamos el costo de los productos seleccionados -->
-            <%
-                boolean enviado = request.getMethod().equals("POST");
-
-                String nombre = request.getParameter("nombre");
-                String correo =request.getParameter("correo");
-                String cargo = request.getParameter("cargo");
-                String[] codigosProductos = request.getParameterValues("productos");
-
-                double precioTotal = 0;
-                double descuento = 0;
-                double montoDescontado = 0;
-                double montoFinal = 0;
-
-                boolean correoValido = false;
-                String codigoTicket = "";
-
-                Cotizacion nuevaCotizacion = null;
-
-                if (enviado) {
-                    nuevaCotizacion = new Cotizacion();
-                    precioTotal = nuevaCotizacion.sumarProductos(codigosProductos);
-                    descuento = nuevaCotizacion.obtenerDescuentoPorCargo(cargo);
-                    montoDescontado = precioTotal * descuento;
-                    montoFinal = precioTotal - montoDescontado;
-
-
-
-                  // Ejecutamos las validaciones y generación de código
-                    correoValido = nuevaCotizacion.validarCorreo(correo);
-                    codigoTicket = nuevaCotizacion.generarCodigoCotizacion();
-                }
-            %>
-
             <% if (enviado) { %>
                 <!-- COTIZACION FINAL -->
-                <div>
+                <div id="formato-cotizacion" style="<%= estiloResultado %>">
                     <p>Ticket: <%= codigoTicket %> </p>
                     <p>Cliente: <%= nombre %> </p>
                     <p>Producto: <%= (request.getParameterValues("productos") != null) ? String.join(", ", request.getParameterValues("productos")) : "" %> </p>
@@ -121,11 +122,11 @@
 
                     <h3>Total a Pagar: $ <%= montoFinal %></h3>
 
-                    <p>El nombre del producto tiene <%= request.getAttribute("caracteresProducto") %> caracteres.</p>
+                    <!--<p>El nombre del producto tiene <%= request.getAttribute("caracteresProducto") %> caracteres.</p>-->
                     <!-- Uso del operador ternario para imprimir -->
                     <p>Estado del correo: <%= correoValido ? "Sí, es válido" : "No es válido" %> </p>
                     <br>
-                    <a href="">Nueva cotización</a>
+                    <a href="index.jsp">Realizar otra cotización</a>
                 </div>
             <% } %>
     </body>
